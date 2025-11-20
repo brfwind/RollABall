@@ -7,22 +7,49 @@ using TMPro;
 public class NewBehaviourScript : MonoBehaviour
 {
     public Rigidbody rb;
-    public TextMeshProUGUI textComponent;
+    private int totalFoods;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timeText;
     public GameObject winTextGo;
+    /// <summary>
+    /// 是否开始计时
+    /// </summary>
+    private bool started = false;
+    /// <summary>
+    /// 是否终止计时
+    /// </summary>
+    private bool finished = false;
     public float speed;
+    private float timer = 0f;
     public float Score = 0;
 
+    void Start()
+    {
+        //自动获取场景中的食物总数
+        totalFoods = GameObject.FindGameObjectsWithTag("Food").Length;
+    }
     void FixedUpdate()
     {
+        //读取键盘输入
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
         Vector3 dir = new Vector3(h,0,v) * speed;
 
+        //给小球施加力
         rb.AddForce(dir);
     }
     void Update()
     {
+        if(!started && Input.anyKey)
+            started = true;
+
+        if(started && !finished)
+        {
+            timer += Time.deltaTime;
+            timeText.text = "Time:" + timer.ToString("F2");
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("退出游戏"); // 在编辑器里测试用
@@ -31,15 +58,21 @@ public class NewBehaviourScript : MonoBehaviour
     }
     void OnTriggerEnter(Collider collision)
     {
+        //检测到碰到food：
+        //加得分
+        //销毁food
+        //符合条件时，停止计时，放结束面板
         if(collision.gameObject.tag == "Food")
         {
             Score++;
-            textComponent.text = "Score:" + Score.ToString();
+            scoreText.text = "Score:" + Score.ToString();
             Destroy(collision.gameObject);
 
-            if(Score == 15)
+            if(Score == totalFoods)
             {
                 winTextGo.SetActive(true);
+                finished = true;
+                started = false;
             }
         }
     }
