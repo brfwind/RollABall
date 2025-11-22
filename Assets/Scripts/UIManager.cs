@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 {
     public Button reTry;
     public Button menu;
+    public Button nextLevel;
 
     public void RestartGame()
     {
@@ -19,5 +20,14 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
+    public void LoadNextLevel()
+    {
+        string cur = SceneManager.GetActiveScene().name;
+        int level = (int)char.GetNumericValue(cur[cur.Length - 1]);
+        level += 1;
+        string nextLevelName = "Level_" + level;
+        
+        SceneManager.LoadScene(nextLevelName);
+    }
   
 }

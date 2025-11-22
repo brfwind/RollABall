@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class NewBehaviourScript : MonoBehaviour
     private int totalFoods;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
+    public TextMeshProUGUI levelText;
     public GameObject winPanel;
     /// <summary>
     /// 是否开始计时
@@ -27,6 +29,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
         //自动获取场景中的食物总数
         totalFoods = GameObject.FindGameObjectsWithTag("Food").Length;
+        levelText.text = SceneManager.GetActiveScene().name;
     }
     void FixedUpdate()
     {
