@@ -10,7 +10,7 @@ public class NewBehaviourScript : MonoBehaviour
     private int totalFoods;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
-    public GameObject winTextGo;
+    public GameObject winPanel;
     /// <summary>
     /// 是否开始计时
     /// </summary>
@@ -70,7 +70,7 @@ public class NewBehaviourScript : MonoBehaviour
 
             if(Score == totalFoods)
             {
-                winTextGo.SetActive(true);
+                winPanel.SetActive(true);
                 finished = true;
                 started = false;
             }
