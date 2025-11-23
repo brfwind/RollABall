@@ -7,6 +7,6 @@ public class MenuManager : MonoBehaviour
 {
     public void GoToLevel(string name)
     {
-        SceneManager.LoadScene(name);
+        TransitionManager.instance.Transition(name);
     }
 }

@@ -12,12 +12,12 @@ public class UIManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        TransitionManager.instance.Transition(SceneManager.GetActiveScene().name);
     }
 
     public void BackToMenu()
     {
-        SceneManager.LoadScene("Menu");
+        TransitionManager.instance.Transition("Menu");
     }
 
     public void LoadNextLevel()
@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
         level += 1;
         string nextLevelName = "Level_" + level;
         
-        SceneManager.LoadScene(nextLevelName);
+        TransitionManager.instance.Transition(nextLevelName);
     }
   
 }
