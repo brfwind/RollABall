@@ -24,6 +24,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float speed;
     private float timer = 0f;
     public float Score = 0;
+    private bool canControl = true;
 
     void Start()
     {
@@ -33,6 +34,9 @@ public class NewBehaviourScript : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if(!canControl)
+            return;
+
         //读取键盘输入
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
@@ -71,11 +75,15 @@ public class NewBehaviourScript : MonoBehaviour
             scoreText.text = "Score:" + Score.ToString();
             Destroy(collision.gameObject);
 
+            //结束面板
+            //调整计时、禁用输入、增大摩擦使之停下
             if(Score == totalFoods)
             {
                 winPanel.SetActive(true);
                 finished = true;
                 started = false;
+                canControl = false;
+                rb.drag = 5.5f;
             }
         }
     }
