@@ -7,7 +7,8 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public string levelName;     // 关卡名
-    public float timeLimit;      // 时间限制
+    public int levelIndex;       //关卡数下标
+    public float timeLimit;      // 通关时间限制
     public float midTime;
     public float longTime;
     public float bestTime;       // 玩家历史最佳时间

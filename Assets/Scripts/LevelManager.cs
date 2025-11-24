@@ -13,6 +13,8 @@ public class LevelManager : MonoBehaviour
     private bool started = false;
     private bool finished = false;
 
+    public event Action OnWinGame;
+
     //获取食物数量
     //获取关卡名称
     //订阅事件
@@ -38,17 +40,20 @@ public class LevelManager : MonoBehaviour
             ui.SetTimeText(timer);
         }
 
-        if(timer < levelData.timeLimit)
+        if (timer < levelData.timeLimit)
         {
             ui.SetTextColor(Color.green);
+            ui.SetWinTextAndColor("EXCELLENT!",Color.green);
         }
-        else if(timer < levelData.midTime)
+        else if (timer < levelData.midTime)
         {
             ui.SetTextColor(new Color(1f, 0.5f, 0f));
+            ui.SetWinTextAndColor("JUST MADE IT!",new Color(1f, 0.5f, 0f));
         }
         else
         {
             ui.SetTextColor(Color.red);
+            ui.SetWinTextAndColor("TOO SLOW!",Color.red);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -84,6 +89,30 @@ public class LevelManager : MonoBehaviour
 
         // 更新最佳时间
         levelData.bestTime = Mathf.Min(timer, levelData.bestTime);
+
+        //更新最佳时间
+        if(!PlayerPrefs.HasKey(levelData.levelIndex + "BestTime"))
+        {
+            PlayerPrefs.SetFloat(levelData.levelIndex + "BestTime",timer);
+        }
+        else if(timer < PlayerPrefs.GetFloat(levelData.levelIndex + "BestTime"))
+        {
+            PlayerPrefs.SetFloat(levelData.levelIndex + "BestTime",timer);
+        }
+
+        //触发事件
+        if(timer <= levelData.timeLimit)
+        {   
+            OnWinGame?.Invoke();
+        }
+
+        //更新已解锁关卡
+        if (levelData.levelIndex >= PlayerPrefs.GetInt("UnLockedLevelIndex") && timer <= levelData.timeLimit)
+        {
+            PlayerPrefs.SetInt("UnLockedLevelIndex", levelData.levelIndex + 1);
+            Debug.Log("解锁了");
+            PlayerPrefs.Save();
+        }
 
         // 显示胜利面板
         ui.ShowOverPanel();

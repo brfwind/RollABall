@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public Button nextLevel;
     public GameObject overPanel;
     public TextMeshProUGUI timeText;
+    public TextMeshProUGUI winText;
     public TextMeshProUGUI levelName;
 
     //重玩按钮
@@ -31,10 +32,16 @@ public class UIManager : MonoBehaviour
     {
         string cur = SceneManager.GetActiveScene().name;
         int level = (int)char.GetNumericValue(cur[cur.Length - 1]);
-        level += 1;
-        string nextLevelName = "Level_" + level;
         
-        TransitionManager.instance.Transition(nextLevelName);
+        if(++level <= PlayerPrefs.GetInt("UnLockedLevelIndex"))
+        {
+            nextLevel.interactable = true;
+            string nextLevelName = "Level_" + level;
+            TransitionManager.instance.Transition(nextLevelName);
+        }else
+        {
+            nextLevel.interactable = false;
+        }
     }
 
     public void SetTextColor(Color color)
@@ -55,6 +62,12 @@ public class UIManager : MonoBehaviour
     public void SetLevelText(string name)
     {
         levelName.text = name;
+    }
+
+    public void SetWinTextAndColor(string content,Color color)
+    {
+        winText.text = content;
+        winText.color = color;
     }
   
 }

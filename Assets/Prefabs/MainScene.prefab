@@ -1083,7 +1083,10 @@ MonoBehaviour:
   nextLevel: {fileID: 3261915289938813526}
   overPanel: {fileID: 5667974254031718154}
   timeText: {fileID: 2235160245208648228}
+  winText: {fileID: 108219517099786678}
   levelName: {fileID: 3433923400119185925}
+  goalTime: {fileID: 0}
+  bestTime: {fileID: 0}
 --- !u!1 &5667974254031718154
 GameObject:
   m_ObjectHideFlags: 0
