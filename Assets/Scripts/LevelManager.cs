@@ -6,10 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     public Player player;
     public LevelData levelData;
-    public TextMeshProUGUI levelText;
-    public TextMeshProUGUI timeText;
-    public GameObject winPanel;
-
+    public UIManager ui;
     private int totalFoods;
     private int score = 0;
     private float timer = 0f;
@@ -22,7 +19,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         totalFoods = GameObject.FindGameObjectsWithTag("Food").Length;
-        levelText.text = levelData.levelName;
+        ui.SetLevelText(levelData.levelName);
 
         // 订阅 Player 的事件
         if (player != null)
@@ -38,20 +35,20 @@ public class LevelManager : MonoBehaviour
         if (started && !finished)
         {
             timer += Time.deltaTime;
-            timeText.text = "Time: " + timer.ToString("F2");
+            ui.SetTimeText(timer);
         }
 
         if(timer < levelData.timeLimit)
         {
-            timeText.color = Color.green;
+            ui.SetTextColor(Color.green);
         }
         else if(timer < levelData.midTime)
         {
-            timeText.color = new Color(1f, 0.5f, 0f);
+            ui.SetTextColor(new Color(1f, 0.5f, 0f));
         }
         else
         {
-            timeText.color = Color.red;
+            ui.SetTextColor(Color.red);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -89,7 +86,6 @@ public class LevelManager : MonoBehaviour
         levelData.bestTime = Mathf.Min(timer, levelData.bestTime);
 
         // 显示胜利面板
-        if (winPanel != null)
-            winPanel.SetActive(true);
+        ui.ShowOverPanel();
     }
 }
