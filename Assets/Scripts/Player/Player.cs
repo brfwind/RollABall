@@ -4,11 +4,17 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Rigidbody rb;
+    public AudioManager music;
     public float speed = 5f;
     public bool canControl = true;
 
     //事件
     public event Action OnFoodCollected;
+
+    void Start()
+    {
+        music = AudioManager.instance;
+    }
 
     //实现小球移动
     void FixedUpdate()
@@ -29,6 +35,7 @@ public class Player : MonoBehaviour
         if (collision.CompareTag("Food"))
         {
             Destroy(collision.gameObject);
+            music.PlayFood();
             OnFoodCollected?.Invoke(); // 通知 LevelManager
         }
     }

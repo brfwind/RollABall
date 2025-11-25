@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
     public Player player;
     public LevelData levelData;
     public UIManager ui;
+    public AudioManager music;
     private int totalFoods;
     private int score = 0;
     private float timer = 0f;
@@ -21,6 +22,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         totalFoods = GameObject.FindGameObjectsWithTag("Food").Length;
+        music = AudioManager.instance;
         ui.SetLevelText(levelData.levelName);
 
         // 订阅 Player 的事件
@@ -28,7 +30,8 @@ public class LevelManager : MonoBehaviour
             player.OnFoodCollected += CollectFood;
     }
 
-    //计时逻辑
+    //计时逻辑(优化时间状态检测)
+    string lastState = "";
     void Update()
     {
         if (!started && Input.anyKey)
@@ -40,28 +43,42 @@ public class LevelManager : MonoBehaviour
             ui.SetTimeText(timer);
         }
 
-        if (timer < levelData.timeLimit)
-        {
-            ui.SetTextColor(Color.green);
-            ui.SetWinTextAndColor("EXCELLENT!",Color.green);
-        }
-        else if (timer < levelData.midTime)
-        {
-            ui.SetTextColor(new Color(1f, 0.5f, 0f));
-            ui.SetWinTextAndColor("JUST MADE IT!",new Color(1f, 0.5f, 0f));
-        }
-        else
-        {
-            ui.SetTextColor(Color.red);
-            ui.SetWinTextAndColor("TOO SLOW!",Color.red);
-        }
+        string currentState;
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (timer < levelData.timeLimit)
+            currentState = "excellent";
+        else if (timer < levelData.midTime)
+            currentState = "mid";
+        else
+            currentState = "slow";
+
+        if (currentState != lastState)
         {
-            Debug.Log("退出游戏");
-            Application.Quit();
+            switch (currentState)
+            {
+                case "excellent":
+                    ui.SetTextColor(Color.green);
+                    ui.SetWinTextAndColor("EXCELLENT!", Color.green);
+                    music.overGame.clip = music.winGameClip;
+                    break;
+
+                case "mid":
+                    ui.SetTextColor(new Color(1f, 0.5f, 0f));
+                    ui.SetWinTextAndColor("JUST MADE IT!", new Color(1f, 0.5f, 0f));
+                    music.overGame.clip = music.midGameClip;
+                    break;
+
+                case "slow":
+                    ui.SetTextColor(Color.red);
+                    ui.SetWinTextAndColor("TOO SLOW!", Color.red);
+                    music.overGame.clip = music.badGameClip;
+                    break;
+            }
+
+            lastState = currentState;
         }
     }
+
 
     //事件回调方法
     void CollectFood()
@@ -91,18 +108,18 @@ public class LevelManager : MonoBehaviour
         levelData.bestTime = Mathf.Min(timer, levelData.bestTime);
 
         //更新最佳时间
-        if(!PlayerPrefs.HasKey(levelData.levelIndex + "BestTime"))
+        if (!PlayerPrefs.HasKey(levelData.levelIndex + "BestTime"))
         {
-            PlayerPrefs.SetFloat(levelData.levelIndex + "BestTime",timer);
+            PlayerPrefs.SetFloat(levelData.levelIndex + "BestTime", timer);
         }
-        else if(timer < PlayerPrefs.GetFloat(levelData.levelIndex + "BestTime"))
+        else if (timer < PlayerPrefs.GetFloat(levelData.levelIndex + "BestTime"))
         {
-            PlayerPrefs.SetFloat(levelData.levelIndex + "BestTime",timer);
+            PlayerPrefs.SetFloat(levelData.levelIndex + "BestTime", timer);
         }
 
         //触发事件
-        if(timer <= levelData.timeLimit)
-        {   
+        if (timer <= levelData.timeLimit)
+        {
             OnWinGame?.Invoke();
         }
 
@@ -113,6 +130,9 @@ public class LevelManager : MonoBehaviour
             Debug.Log("解锁了");
             PlayerPrefs.Save();
         }
+
+        //播放over音乐
+        music.PlayOverGame();
 
         // 显示胜利面板
         ui.ShowOverPanel();
