@@ -55,8 +55,13 @@ public class LevelSelcetManager : MonoBehaviour
             }
     
             // 显示目标和最好成绩
-            goalText.text = "GoalTime:" + levelDatas[i].timeLimit.ToString() + "s";
+            goalText.text = "Challenge:" + levelDatas[i].timeLimit.ToString() + "s";
             bestText.text = "BestTime:" + PlayerPrefs.GetFloat(levelDatas[i].levelIndex + "BestTime", 0).ToString("F2") + "s";
+
+            if(PlayerPrefs.GetFloat(levelDatas[i].levelIndex + "BestTime", 0) < levelDatas[i].timeLimit && PlayerPrefs.GetFloat(levelDatas[i].levelIndex + "BestTime", 0) != 0)
+            {
+                goalText.color = Color.green;
+            }
         }
     }
 }

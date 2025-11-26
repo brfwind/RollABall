@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour
 
                 case "mid":
                     ui.SetTextColor(new Color(1f, 0.5f, 0f));
-                    ui.SetWinTextAndColor("JUST MADE IT!", new Color(1f, 0.5f, 0f));
+                    ui.SetWinTextAndColor("GOOD ENOUGH!", new Color(1f, 0.5f, 0f));
                     music.overGame.clip = music.midGameClip;
                     break;
 
@@ -124,7 +124,7 @@ public class LevelManager : MonoBehaviour
         }
 
         //更新已解锁关卡
-        if (levelData.levelIndex >= PlayerPrefs.GetInt("UnLockedLevelIndex") && timer <= levelData.timeLimit)
+        if (levelData.levelIndex >= PlayerPrefs.GetInt("UnLockedLevelIndex") && timer <= levelData.midTime)
         {
             PlayerPrefs.SetInt("UnLockedLevelIndex", levelData.levelIndex + 1);
             Debug.Log("解锁了");
