@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 {
     public Rigidbody rb;
     public AudioManager music;
+    public bool move = false;
     public float speed = 5f;
     public bool canControl = true;
 
@@ -14,6 +15,22 @@ public class Player : MonoBehaviour
     void Start()
     {
         music = AudioManager.instance;
+    }
+
+    //只有小球有水平速度时，才开始计时
+    //move会在levelManager里被使用
+    void Update()
+    {
+        Vector3 v = rb.velocity;
+
+        Vector2 hv = new Vector2(v.x,v.z);
+
+        float hSpeed = hv.magnitude;
+
+        if(hSpeed > 0.1f)
+            move = true;
+        else 
+            move = false; 
     }
 
     //实现小球移动

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Level_2
   levelIndex: 2
-  timeLimit: 12
-  midTime: 18
-  longTime: 25
+  timeLimit: 8.5
+  midTime: 12
+  longTime: 20
   bestTime: 0

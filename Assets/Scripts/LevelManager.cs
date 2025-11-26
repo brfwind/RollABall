@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
     public Player player;
     public LevelData levelData;
     public UIManager ui;
-    public AudioManager music;
+    private AudioManager music;
     private int totalFoods;
     private int score = 0;
     private float timer = 0f;
@@ -34,7 +34,7 @@ public class LevelManager : MonoBehaviour
     string lastState = "";
     void Update()
     {
-        if (!started && Input.anyKey)
+        if (!started && player.move)
             started = true;
 
         if (started && !finished)
