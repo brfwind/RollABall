@@ -44,12 +44,11 @@ public class UIManager : MonoBehaviour
         {
             if (escPanel.activeInHierarchy)
             {
-                escPanel.SetActive(false);
-                Time.timeScale = 1;
+                StartCoroutine(TransitionManager.instance.ClosePanel(escPanel));
             }
             else
             {
-                ShowEscPanel();
+                TransitionManager.instance.ShowPanel(escPanel);
             }
         }
     }
@@ -85,21 +84,6 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
-    //面板显示方法
-    public void ShowEscPanel()
-    {
-        // 先关闭其他面板
-        CloseAllPanels();
-        escPanel.SetActive(true);
-        Time.timeScale = 0;
-    }
-
-    private void CloseAllPanels()
-    {
-        escPanel.SetActive(false);
-        overPanel.SetActive(false);
-    }
-
     //下一关按钮
     public void LoadNextLevel()
     {
@@ -130,7 +114,6 @@ public class UIManager : MonoBehaviour
 
     public void ShowOverPanel()
     {
-        CloseAllPanels();
         overPanel.SetActive(true);
     }
 

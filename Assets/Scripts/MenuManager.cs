@@ -8,18 +8,20 @@ public class MenuManager : MonoBehaviour
 {
     public GameObject escPanel;
     public Button exitGame;
+    public static bool is3DCamera = false;
+    public Toggle toggle;
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(escPanel.activeInHierarchy)
+            if (escPanel.activeInHierarchy)
             {
-                escPanel.SetActive(false);
+                StartCoroutine(TransitionManager.instance.ClosePanel(escPanel));
             }
             else
             {
-                escPanel.SetActive(true);
+                TransitionManager.instance.ShowPanel(escPanel);
             }
         }
     }
@@ -34,6 +36,8 @@ public class MenuManager : MonoBehaviour
             PlayerPrefs.SetInt("UnLockedLevelIndex", 1);
             PlayerPrefs.Save();
         }
+
+        toggle.isOn = is3DCamera;
     }
 
     public void GoToLevel(string name)
@@ -46,4 +50,10 @@ public class MenuManager : MonoBehaviour
         Debug.Log("退出游戏");
         Application.Quit();
     }
+
+    public void Set3DCamera()
+    {
+        is3DCamera = toggle.isOn;
+    }
+
 }

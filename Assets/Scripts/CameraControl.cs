@@ -21,6 +21,7 @@ public class SmoothCameraFollow : MonoBehaviour
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
 
         // 可选：让摄像机始终看向玩家
-        transform.LookAt(target);
+        if(MenuManager.is3DCamera)
+            transform.LookAt(target);
     }
 }
