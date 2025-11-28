@@ -168,6 +168,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  showCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0057142815
+      value: 0.009417965
+      inSlope: 0.2699454
+      outSlope: 0.2699454
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.15804596
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  hideCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0014266968
+      value: 0.9953003
+      inSlope: -0.008359637
+      outSlope: -0.008359637
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.11429021
+    - serializedVersion: 3
+      time: 1.0014038
+      value: 0.0028266907
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveSpeed: 2
 --- !u!114 &55768461
 MonoBehaviour:
   m_ObjectHideFlags: 0

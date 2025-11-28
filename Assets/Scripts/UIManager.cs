@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -88,7 +89,10 @@ public class UIManager : MonoBehaviour
     public void LoadNextLevel()
     {
         string cur = SceneManager.GetActiveScene().name;
-        int level = (int)char.GetNumericValue(cur[cur.Length - 1]);
+
+        // 正则表达式提取关卡数字（假设一定有数字）
+        Match match = Regex.Match(cur, @"\d+$");
+        int level = int.Parse(match.Value);
 
         if (++level <= PlayerPrefs.GetInt("UnLockedLevelIndex"))
         {

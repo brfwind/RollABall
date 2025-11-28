@@ -36,6 +36,7 @@ public class TransitionManager : MonoBehaviour
         StartCoroutine(Fade(0));
     }
 
+    //供外部调用的方法
     public void Transition(string sceneName)
     {
         StartCoroutine(TransitionToScene(sceneName));
