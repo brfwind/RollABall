@@ -51,9 +51,8 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void Set3DCamera()
+    public void Set3DCamera(bool on)
     {
-        is3DCamera = toggle.isOn;
+        is3DCamera = on;
     }
-
 }

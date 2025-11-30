@@ -9,6 +9,7 @@ public class TransitionManager : MonoBehaviour
     public static TransitionManager instance;
 
     [Header("渐入渐出")]
+    //给黑色Panel添加CanvasGroup组件，便于方便调整Alpha值
     private CanvasGroup canvasGroup;
     public float speed;
     [Header("渐弹渐闭")]
@@ -99,6 +100,8 @@ public class TransitionManager : MonoBehaviour
 
         AnimationCurve curve = null;
 
+        //注意：渐弹要保证弹前，面板是Active状态
+        //      渐闭要保证闭后，面板是关闭状态
         if (amount == 1)
         {
             panel.SetActive(true);
@@ -114,6 +117,9 @@ public class TransitionManager : MonoBehaviour
             float scale = curve.Evaluate(timer);
             panel.transform.localScale = Vector3.one * scale;
 
+            //这里用unscaledDeltaTime代替DeltaTime
+            //前者不受游戏中timeScale的影响
+            //就算游戏暂停，UI仍会继续播放完
             timer += Time.unscaledDeltaTime * curveSpeed;
             yield return null;
         }
