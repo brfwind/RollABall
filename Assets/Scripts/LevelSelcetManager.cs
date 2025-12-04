@@ -9,6 +9,7 @@ public class LevelSelcetManager : MonoBehaviour
     public GameObject[] levelObjects;
     public LevelData[] levelDatas;
 
+    //更新关卡状态
     void Start()
     {
         int unlockedIndex = PlayerPrefs.GetInt("UnLockedLevelIndex");

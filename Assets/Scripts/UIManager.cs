@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour
     public GameObject overPanel;
     public GameObject escPanel;
 
+    //单例
     private void Awake()
     {
         if (instance == null)
@@ -39,6 +40,8 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    #region 按钮功能实现
+    //Esc按压检测
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -73,12 +76,7 @@ public class UIManager : MonoBehaviour
         TransitionManager.instance.Transition("Menu");
     }
 
-    public void ContinueB()
-    {
-        Time.timeScale = 1;
-        escPanel.SetActive(false);
-    }
-
+    //退出游戏按钮
     public void ExitGame()
     {
         Debug.Log("退出游戏");
@@ -88,6 +86,7 @@ public class UIManager : MonoBehaviour
     //下一关按钮
     public void LoadNextLevel()
     {
+        //获取当前场景(关卡)名
         string cur = SceneManager.GetActiveScene().name;
 
         // 正则表达式提取关卡数字（假设一定有数字）
@@ -105,6 +104,7 @@ public class UIManager : MonoBehaviour
             nextLevel.interactable = false;
         }
     }
+    #endregion
 
     public void SetTextColor(Color color)
     {

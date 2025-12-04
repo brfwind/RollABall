@@ -51,7 +51,7 @@ public class AudioSetting : MonoBehaviour
         PlayerPrefs.SetFloat("SFXVolume", sliderValue);
     }
 
-
+    //供Esc面板脚本调用值的方法
     public float GetBGMVolume() => PlayerPrefs.GetFloat("BGMVolume", -5f);
     public float GetSFXVolume() => PlayerPrefs.GetFloat("SFXVolume", -5f);
 }

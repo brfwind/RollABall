@@ -8,6 +8,7 @@ public class EscPanelAudio : MonoBehaviour
     public Slider musicSlider;
     public Slider soundSlider;
 
+    //让每次Esc面板上音量Slider的位置和实际音量匹配
     void Start()
     {
         // 初始化 Slider 显示单例的值

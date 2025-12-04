@@ -21,10 +21,11 @@ public class Player : MonoBehaviour
     //move会在levelManager里被使用
     void Update()
     {
+        //从rb获取小球速度信息(V3)
         Vector3 v = rb.velocity;
-
+        //忽略竖直速度，得到二维速度信息(V2)
         Vector2 hv = new Vector2(v.x,v.z);
-
+        //得到水平速度的绝对大小
         float hSpeed = hv.magnitude;
 
         if(hSpeed > 0.1f)
@@ -33,7 +34,7 @@ public class Player : MonoBehaviour
             move = false; 
     }
 
-    //实现小球移动
+    //施加力实现小球移动
     void FixedUpdate()
     {
         if (!canControl)

@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
     public static bool is3DCamera = false;
     public Toggle toggle;
 
+    //Esc按压检测
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -26,6 +27,7 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    //判断UnLockedLevelIndex是否存在，不存在则初始化
     void Start()
     {
         //PlayerPrefs.DeleteAll();
@@ -40,11 +42,13 @@ public class MenuManager : MonoBehaviour
         toggle.isOn = is3DCamera;
     }
 
+    //去往关卡场景方法
     public void GoToLevel(string name)
     {
         TransitionManager.instance.Transition(name);
     }
 
+    //退出游戏按钮
     public void ExitGame()
     {
         Debug.Log("退出游戏");

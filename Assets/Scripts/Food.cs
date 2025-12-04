@@ -15,6 +15,7 @@ public class Food : MonoBehaviour
         startPos = transform.position; // 记录初始位置
     }
 
+    //食物浮动动画
     void Update()
     {
         // 旋转方块

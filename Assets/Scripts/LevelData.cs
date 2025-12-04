@@ -10,6 +10,6 @@ public class LevelData : ScriptableObject
     public int levelIndex;       //关卡数下标
     public float timeLimit;      // 通关时间限制
     public float midTime;
-    public float longTime;
+    public float longTime;       //0引用是因为都用else省略了）
     public float bestTime;       // 玩家历史最佳时间
 }
